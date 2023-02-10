@@ -40,7 +40,7 @@ export default function Weather(props) {
   return (
     <div className="container">
       <div className="weather-app-wrapper">
-        <form id="search-form" className="mb-2">
+        <form id="search-form" className="mb-2" onSubmit={handleSubmit}>
           <div className="row">
             <div className="col-7">
               <input
@@ -56,6 +56,7 @@ export default function Weather(props) {
                   type="submit"
                   value="Search"
                   className="btn btn-secondary w-55"
+                  onChange={handleCityChange}
                 />
               </div>
             </div>
@@ -70,7 +71,7 @@ export default function Weather(props) {
       <h2>
         <span className="temperature">{weatherData.temperature}</span>
         <span className="units">
-          <a href="#">°C</a> | <a href="#">°F</a>
+          <button href="#">°C</button> | <button href="#">°F</button>
         </span>
       </h2>
 
