@@ -1,120 +1,132 @@
-import React, { useState } from "react";
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 import axios from "axios";
 import "./App.css";
-import Footer from "./Footer";
+import WeatherIcon from "./WeatherIcon";
+import CurrentLocation from "./CurrentLocation";
+import Search from "./Search";
+import DateUtil from "./DateUtil";
+import Api from "./Api";
+import Forecast from "./Forecast";
+import "bootstrap/dist/css/bootstrap.css";
 
-export default function Weather(props) {
-  const [weatherData, setWeatherData] = useState({ ready: false });
-  const [city, setCity] = useState(props.defaultCity);
-  function handleResponse(response) {
-    console.log(response.data);
-    setWeatherData({
-      ready: true,
-      temperature: response.data.main.temp,
-      wind: response.data.wind.speed,
-      city: response.data.name,
-      humidity: response.data.main.humidity,
-      description: response.data.weather[0].description,
-      date: new Date(response.data.dt * 1000),
-      iconUrl: `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`,
+export default class Weather extends Component {
+  static propTypes = {
+    city: PropTypes.string.isRequired
+  };
+
+  state = {
+    city: this.props.city
+  };
+
+  componentWillMount() {
+    this.refresh(this.state.city);
+  }
+
+  refreshWeatherFromParams(params) {
+    let url = `${Api.url}/data/2.5/weather?appid=${
+      Api.key
+    }&units=metric&${params}`;
+    axios.get(url).then(response => {
+      this.setState({
+
+        city: response.data.name,
+        weather: {
+          description: response.data.weather[0].main,
+          icon: response.data.weather[0].icon,
+          humidity: Math.round(response.data.main.humidity) + "%",
+          temperature: Math.round(response.data.main.temp),
+          time: new DateUtil(new Date(response.data.dt * 1000)).dayTime(),
+          wind: Math.round(response.data.wind.speed) + "km/h"
+
+        }
+      });
     });
   }
 
-  function search() {
-    const apiKey = "3323f2e20324d1953472069851a88a5a";
+  refreshWeatherFromLatitudeAndLongitude = (latitude, longitude) => {
+    this.refreshWeatherFromParams(`lat=${latitude}&lon=${longitude}`);
+  };
 
-    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
-    axios.get(apiUrl).then(handleResponse);
-  }
+  refresh = city => {
+    this.refreshWeatherFromParams(`q=${city}`);
+  };
 
-  function handleSubmit(event) {
-    event.preventDefault();
 
-    search();
-  }
 
-  function handleCityChange(event) {
-    setCity(event.target.value);
-  }
+    render() {
+    if (this.state.weather) {
+      return (
+        <div>
+          <div className="clearfix">
+            <Search refresh={this.refresh} />
+            <CurrentLocation
+              refresh={this.refreshWeatherFromLatitudeAndLongitude}
+            />
+          </div>
+             <div className="weather-summary">
+            <div className="weather-summary-header">
+              <h1>{this.state.city}</h1>
+              <div className="weather-detail__text">
+                {this.state.weather.time}
+              </div>
+              <div className="weather-detail__text">
+                {this.state.weather.description}
+              </div>
+            </div>
 
-  return (
-    <div className="container">
-      <div className="weather-app-wrapper">
-        <form id="search-form" className="mb-2" onSubmit={handleSubmit}>
-          <div className="row">
-            <div className="col-7">
-              <input
-                type="search"
-                placeholder="Enter a city.."
-                className="form-control"
-                id="city-input"
-                autocomplete="off"
-              />
-
-              <div className="col-3" id="button">
-                <input
-                  type="submit"
-                  value="Search"
-                  className="btn btn-secondary w-55"
-                  onChange={handleCityChange}
-                />
+      
+      <div className="row">
+              <div className="col-sm-6">
+                <div className="clearfix">
+                  <div className="float-left weather-icon">
+                    <WeatherIcon iconName={this.state.weather.icon} />
+                  </div>
+                  <div className="weather-temp weather-temp--today">
+                    {this.state.weather.temperature}
+                  </div>
+                  <div className="weather-unit__text weather-unit__text--today">
+                    °C
+                  </div>
+                </div>
+              </div>
+               <div className="row row-cols">
+        <div className="col">
+          <div className="card">
+            <div className="card-body">
+                <div className="weather-detail__text">
+                  Humidity: {this.state.weather.humidity}
+                </div>
+                <div className="weather-detail__text">
+                  Wind: {this.state.weather.wind}
+                </div>
+              </div>
               </div>
             </div>
           </div>
-        </form>
-      </div>
-
-      <h1>{weatherData.city}</h1>
-
-      <img src={weatherData.imgLink} className="weather-img" alt="icon" />
-
-      <h2>
-        <span className="temperature">{weatherData.temperature}</span>
-        <span className="units">
-          <button href="#">°C</button> | <button href="#">°F</button>
-        </span>
-      </h2>
-
-      <h3>
-        <li>{weatherData.description}</li>
-      </h3>
-      <ul>
-        <li id="date">
-          {weatherData.currentDay} {weatherData.currentHour}
-        </li>
-      </ul>
-
-      <div className={weatherData.weatherForecast}></div>
-
-      <div className="row row-cols">
+                 <div className="row row-cols">
         <div className="col">
           <div className="card">
             <div className="card-body">
-              <h5 className="card-title">
-                Wind: <span>{weatherData.wind}</span>
-                <br />
-                Humidity: <span>{weatherData.humidity}</span>
-                <br />
-              </h5>
+                <div className="weather-detail__text">
+                  Sunrise: {this.state.weather.sunrise}
+                </div>
+                <div className="weather-detail__text">
+              Sunset: {this.state.weather.sunset}
+                </div>
+              </div>
+              </div>
             </div>
           </div>
+          <Forecast city={this.state.city} />
         </div>
-
-        <div className="col">
-          <div className="card">
-            <div className="card-body">
-              <h5 className="card-title">
-                Sunrise: <span>{weatherData.sunrise}</span>
-                <br />
-                Sunset: <span>{weatherData.sunset}</span>
-                <br />
-              </h5>
-            </div>
-          </div>
+      );
+    } else {
+      return (
+        <div>
+          App is loading, <em>please wait...</em>
         </div>
-      </div>
-
-      <Footer />
-    </div>
-  );
+      );
+    }
+  }
 }
