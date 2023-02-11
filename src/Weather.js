@@ -64,19 +64,7 @@ export default class Weather extends Component {
               refresh={this.refreshWeatherFromLatitudeAndLongitude}
             />
           </div>
-             <div className="weather-summary">
-            <div className="weather-summary-header">
-              <h1>{this.state.city}</h1>
-              <div className="weather-detail__text">
-                {this.state.weather.time}
-              </div>
-              <div className="weather-detail__text">
-                {this.state.weather.description}
-              </div>
-            </div>
-
-      
-      <div className="row">
+               <div className="row">
               <div className="col-sm-6">
                 <div className="clearfix">
                   <div className="float-left weather-icon">
@@ -90,6 +78,19 @@ export default class Weather extends Component {
                   </div>
                 </div>
               </div>
+             <div className="weather-summary">
+            <div className="weather-summary-header">
+              <h1>{this.state.city}</h1>
+              <div className="weather-detail__text">
+                {this.state.weather.time}
+              </div>
+              <div className="weather-detail__text">
+                {this.state.weather.description}
+              </div>
+            </div>
+
+      
+ 
                <div className="row row-cols">
         <div className="col">
           <div className="card">
