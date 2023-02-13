@@ -1,4 +1,4 @@
-export default class DateUtil {
+export default class FormattedDate {
   constructor(date) {
     this.date = date;
   }

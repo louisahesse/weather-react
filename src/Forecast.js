@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import Api from "./Api";
-import DateUtil from "./DateUtil";
+import DateUtil from "./FormattedDate";
 import "./Forecast.css";
 import WeatherIcon from "./WeatherIcon";
 

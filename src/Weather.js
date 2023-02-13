@@ -7,7 +7,7 @@ import "./WeatherInfo";
 import WeatherIcon from "./WeatherIcon";
 import CurrentLocation from "./CurrentLocation";
 import Search from "./Search";
-import DateUtil from "./DateUtil";
+import DateUtil from "./FormattedDate";
 import Api from "./Api";
 import Forecast from "./Forecast";
 import "bootstrap/dist/css/bootstrap.css";
@@ -33,13 +33,15 @@ export default class Weather extends Component {
         weather: {
           ready: true,
           city: response.data.name,
-          date: "Wednesday 7:00",
+          date: new Date(response.data.dt * 1000),
           description: response.data.weather[0].description,
           icon: response.data.weather[0].icon,
           humidity: Math.round(response.data.main.humidity) + "%",
           temperature: Math.round(response.data.main.temp),
           time: new DateUtil(new Date(response.data.dt * 1000)).dayTime(),
           wind: Math.round(response.data.wind.speed) + "km/h",
+          iconUrl:
+            "https://ssl.gstatic.com/onebox/weather/64/partly_cloudy.png",
         },
       });
     });
