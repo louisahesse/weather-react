@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import "./App.css";
+import "./Weather.css";
+import "./WeatherInfo";
 import WeatherIcon from "./WeatherIcon";
 import CurrentLocation from "./CurrentLocation";
 import Search from "./Search";
@@ -29,7 +31,10 @@ export default class Weather extends Component {
       this.setState({
         city: response.data.name,
         weather: {
-          description: response.data.weather[0].main,
+          ready: true,
+          city: response.data.name,
+          date: "Wednesday 7:00",
+          description: response.data.weather[0].description,
           icon: response.data.weather[0].icon,
           humidity: Math.round(response.data.main.humidity) + "%",
           temperature: Math.round(response.data.main.temp),
