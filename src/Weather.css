@@ -1,162 +1,49 @@
-body {
-  background-image: url(https://images.pexels.com/photos/2931915/pexels-photo-2931915.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1);
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 600px 740px;
-  max-width: 600px;
-  margin: 0 auto;
-  border: 1px solid;
-  height: 742px;
+.Weather {
+  font-family: arial, sans-serif;
+  border: 1px solid #dadde1;
+  padding: 16px;
+  border-radius: 4px;
+  color: rgb(135, 135, 135);
 }
 
-h1 {
-  text-align: center;
-  font-size: 40px;
-  font-family: "Oleo Script Swash Caps", cursive;
-  font-family: "PT Serif", serif;
-  display: block;
-  bottom: -10px;
-  position: relative;
+.Weather h1 {
+  font-size: 24px;
+  font-weight: 100;
+  margin: 20px 0 0 0;
+  line-height: 29px;
 }
 
-h2 {
-  color: rgb(33, 33, 33);
-  text-align: center;
-  font-family: "Oleo Script Swash Caps", cursive;
-  font-family: "PT Serif", serif;
-  font-size: 110px;
-  top: -82px;
-  display: block;
-  font-weight: bold;
-
-  position: relative;
+.Weather ul {
+  margin: 0;
+  padding: 0;
 }
-h3 {
-  font-family: "Oleo Script Swash Caps", cursive;
-  font-family: "PT Serif", serif;
-  list-style: none;
-  text-align: center;
+
+.Weather li {
   font-size: 16px;
-  top: -90px;
-  display: block;
-  position: relative;
-}
-
-button:hover {
-  cursor: pointer;
-  opacity: 0.7;
-  transition: all 200ms ease-in-out;
-}
-
-ul {
-  font-family: "Oleo Script Swash Caps", cursive;
-  font-family: "PT Serif", serif;
-  text-align: center;
-  font-size: 25px;
+  font-weight: 100;
+  line-height: 19px;
   list-style: none;
-  position: relative;
-  display: block;
-  top: -90px;
-}
-li:first-letter {
-  text-transform: capitalize;
 }
 
-.col {
-  font-size: 10px;
-  text-align: center;
-  display: block;
-  position: relative;
-  top: -120px;
-  font-family: "Oleo Script Swash Caps", cursive;
-  font-family: "PT Serif", serif;
-}
-
-.units {
-  text-decoration: none;
-  color: black;
-  font-size: 20px;
-  font-family: "Oleo Script Swash Caps", cursive;
-  font-family: "PT Serif", serif;
-  display: block;
-  position: relative;
-  left: 70px;
-  bottom: 100px;
-}
-
-.weather-forecast {
-  font-family: "Oleo Script Swash Caps", cursive;
-  font-family: "PT Serif", serif;
-  display: block;
-  text-align: center;
-  top: -50px;
-  position: relative;
-}
-
-.weather-temperature-date {
-  font-family: "Oleo Script Swash Caps", cursive;
-  font-family: "PT Serif", serif;
-  font-size: 15px;
-
-  color: black;
-  text-align: center;
+.Weather .temperature {
   font-weight: bold;
+  color: rgb(33, 33, 33);
+  font-size: 64px;
+  line-height: 64px;
+  margin-left: 5px;
+  font-weight: 400;
+  margin-left: 10px;
 }
 
-.weather-forecast-temperature-min {
-  opacity: 0.5;
-  color: rgb(34, 32, 32);
-  font-weight: lighter;
+.Weather canvas {
+  margin: 10px auto;
 }
 
-.weather-forecast-temperature {
-  font-size: 12px;
-  font-family: "Oleo Script Swash Caps", cursive;
-  font-family: "PT Serif", serif;
-}
-.footer {
-  text-align: center;
-  font-family: "Oleo Script Swash Caps", cursive;
-  font-family: "PT Serif", serif;
-  font-size: 13px;
-  top: 500px;
+.Weather .unit {
+  color: rgb(33, 33, 33);
+  font-size: 16px;
+  font-weight: 400;
   position: relative;
-  right: 180px;
-}
-.weather-app-wrapper {
-  max-width: 350px;
-  margin: 5px auto;
-  font-family: "Oleo Script Swash Caps", cursive;
-  font-family: "PT Serif", serif;
-  top: 15px;
-  position: relative;
-  color: black;
-  font-size: 10px;
-  right: 100px;
-}
-
-.card-body {
-  height: 60px;
-}
-.card-title {
-  font-size: 15px;
-  top: -5px;
-}
-
-.card {
-  width: 170px;
-  position: relative;
-  left: 50px;
-  top: 550px;
-}
-
-.city-input {
-  font-size: 10px;
-}
-
-.weather-img {
-  position: relative;
-  display: block;
-  bottom: -10px;
-  left: 130px;
+  line-height: 1;
+  top: -34px;
 }

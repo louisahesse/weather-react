@@ -1,34 +1,28 @@
-export default class FormattedDate {
-  constructor(date) {
-    this.date = date;
+import React from "react";
+
+export default function FormattedDate(props) {
+  let days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+  let day = days[props.date.getDay()];
+  let hours = props.date.getHours();
+  if (hours < 10) {
+    hours = `0${hours}`;
   }
 
-  day(short = false) {
-    let days = [
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-    ];
-
-    if (short) {
-      return days[this.date.getDay()].substring(0, 3);
-    } else {
-      return days[this.date.getDay()];
-    }
+  let minutes = props.date.getMinutes();
+  if (minutes < 10) {
+    minutes = `0${minutes}`;
   }
-
-  time() {
-    let minutes = this.date.getMinutes();
-    if (minutes < 10) minutes = `${0}minutes`;
-
-    return `${this.date.getHours()}:${minutes}`;
-  }
-
-  dayTime() {
-    return `${this.day()} ${this.time()}`;
-  }
+  return (
+    <div>
+      {day} {hours}:{minutes}
+    </div>
+  );
 }
