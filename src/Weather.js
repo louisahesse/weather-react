@@ -12,11 +12,11 @@ import "bootstrap/dist/css/bootstrap.css";
 
 export default class Weather extends Component {
   static propTypes = {
-    city: PropTypes.string.isRequired
+    city: PropTypes.string.isRequired,
   };
 
   state = {
-    city: this.props.city
+    city: this.props.city,
   };
 
   componentWillMount() {
@@ -24,12 +24,9 @@ export default class Weather extends Component {
   }
 
   refreshWeatherFromParams(params) {
-    let url = `${Api.url}/data/2.5/weather?appid=${
-      Api.key
-    }&units=metric&${params}`;
-    axios.get(url).then(response => {
+    let url = `${Api.url}/data/2.5/weather?appid=${Api.key}&units=metric&${params}`;
+    axios.get(url).then((response) => {
       this.setState({
-
         city: response.data.name,
         weather: {
           description: response.data.weather[0].main,
@@ -37,9 +34,8 @@ export default class Weather extends Component {
           humidity: Math.round(response.data.main.humidity) + "%",
           temperature: Math.round(response.data.main.temp),
           time: new DateUtil(new Date(response.data.dt * 1000)).dayTime(),
-          wind: Math.round(response.data.wind.speed) + "km/h"
-
-        }
+          wind: Math.round(response.data.wind.speed) + "km/h",
+        },
       });
     });
   }
@@ -48,13 +44,11 @@ export default class Weather extends Component {
     this.refreshWeatherFromParams(`lat=${latitude}&lon=${longitude}`);
   };
 
-  refresh = city => {
+  refresh = (city) => {
     this.refreshWeatherFromParams(`q=${city}`);
   };
 
-
-
-    render() {
+  render() {
     if (this.state.weather) {
       return (
         <div>
@@ -64,21 +58,22 @@ export default class Weather extends Component {
               refresh={this.refreshWeatherFromLatitudeAndLongitude}
             />
           </div>
-               <div className="row">
-              <div className="col-sm-6">
-                <div className="clearfix">
-                  <div className="float-left weather-icon">
-                    <WeatherIcon iconName={this.state.weather.icon} />
-                  </div>
-                  <div className="weather-temp weather-temp--today">
-                    {this.state.weather.temperature}
-                  </div>
-                  <div className="weather-unit__text weather-unit__text--today">
-                    °C
-                  </div>
+          <div className="row">
+            <div className="col-sm-6">
+              <div className="clearfix">
+                <div className="float-left weather-icon">
+                  <WeatherIcon iconName={this.state.weather.icon} />
+                </div>
+                <div className="weather-temp weather-temp--today">
+                  {this.state.weather.temperature}
+                </div>
+                <div className="weather-unit__text weather-unit__text--today">
+                  °C
                 </div>
               </div>
-             <div className="weather-summary">
+            </div>
+          </div>
+          <div className="weather-summary">
             <div className="weather-summary-header">
               <h1>{this.state.city}</h1>
               <div className="weather-detail__text">
@@ -89,37 +84,36 @@ export default class Weather extends Component {
               </div>
             </div>
 
-      
- 
-               <div className="row row-cols">
-        <div className="col">
-          <div className="card">
-            <div className="card-body">
-                <div className="weather-detail__text">
-                  Humidity: {this.state.weather.humidity}
+            <div className="row row-cols">
+              <div className="col">
+                <div className="card">
+                  <div className="card-body">
+                    <div className="weather-detail__text">
+                      Humidity: {this.state.weather.humidity}
+                    </div>
+                    <div className="weather-detail__text">
+                      Wind: {this.state.weather.wind}
+                    </div>
+                  </div>
                 </div>
-                <div className="weather-detail__text">
-                  Wind: {this.state.weather.wind}
-                </div>
-              </div>
               </div>
             </div>
-          </div>
-                 <div className="row row-cols">
-        <div className="col">
-          <div className="card">
-            <div className="card-body">
-                <div className="weather-detail__text">
-                  Sunrise: {this.state.weather.sunrise}
+            <div className="row row-cols">
+              <div className="col">
+                <div className="card">
+                  <div className="card-body">
+                    <div className="weather-detail__text">
+                      Sunrise: {this.state.weather.sunrise}
+                    </div>
+                    <div className="weather-detail__text">
+                      Sunset: {this.state.weather.sunset}
+                    </div>
+                  </div>
                 </div>
-                <div className="weather-detail__text">
-              Sunset: {this.state.weather.sunset}
-                </div>
-              </div>
               </div>
             </div>
+            <Forecast city={this.state.city} />
           </div>
-          <Forecast city={this.state.city} />
         </div>
       );
     } else {
